@@ -1,0 +1,41 @@
+<nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" routerLinkActive="active" routerLink="/home" style="font-family: acme;">ShopQuick</a>
+    
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" routerLinkActive="active" routerLink="/home">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLinkActive="active" routerLink="/clothes">Clothes</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLinkActive="active" routerLink="/about">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLinkActive="active" routerLink="/contact">Contact</a>
+        </li>
+      </ul>
+    </div>
+    <ul class="nav-item navbar-nav navbar-right">
+      <li *ngIf="login"><a class="nav-link" routerLinkActive="active" routerLink="/cart"><i class="fas fa-shopping-cart"></i><sup style="color:white;background: red;border-radius: 5px;">{{totalCartItem}}</sup></a></li>&nbsp;&nbsp;
+      <li *ngIf="login" class="avatar">
+        <a  class="nav-link">
+          <div class="chip" style="color: white;">
+            <img src="./assets/img/Home/avatar.png" alt="Person">{{username1}}&nbsp;&nbsp;
+          </div>
+        </a>
+      </li>&nbsp;&nbsp;
+      <li *ngIf="!login"><a class="nav-link" routerLinkActive="active" routerLink="/login"><i class="fas fa-user"></i> Login</a></li>
+      <li *ngIf="login"><a  class="nav-link" routerLinkActive="deactive" (click)="logout()" routerLink="/home">Log out</a></li>
+    </ul>
+    
+  </div>
+</nav>
+
+
+<router-outlet></router-outlet>

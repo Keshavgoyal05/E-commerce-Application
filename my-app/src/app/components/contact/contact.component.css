@@ -1,0 +1,17 @@
+.body{
+    
+    background-image: linear-gradient(#8e2de2, #4a00e0);
+    height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+._10pq ._1fP- {
+    font-size: 1.6rem;
+    color: #ef4e28;
+    font-weight: 500;
+    border: 1px solid #ef4e28;
+    border-radius: 4px;
+    padding: 1.5rem 4rem;
+    display: inline-block;
+}

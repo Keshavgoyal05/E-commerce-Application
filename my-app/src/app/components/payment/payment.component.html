@@ -1,0 +1,129 @@
+<body *ngIf="!paymentStatus"><b>
+<div class="container shadow-lg p-3 rounded-3" style="background-color: blanchedalmond;">
+    <h3><strong>Delivery Address</strong>
+        <button class="btn" style="float: right;" (click)="onEditAddress()"><i class="fas fa-edit"></i></button>
+    </h3><hr>
+    
+      <div *ngFor="let row of deliveryData">
+      <div class="form-check">
+        <input class="form-check-input" type="radio" [(ngModel)]="radioValue" name="exampleRadios" id="exampleRadios1" value={{row.delivery_id}} checked>
+        <label class="form-check-label" for="exampleRadios1">
+          Name : {{row.name}}<br>
+          Phone : {{row.phone}}<br>
+          Address : {{row.address}}<br>
+          {{row.city}},{{row.state}}<br>
+          {{deliveryForm.value.zip}}<button style="border: none;background: none;"  (click)="deleteDeliverAddress(row.delivery_id)"><i class="fas fa-trash"></i></button>
+        </label>
+        
+      </div>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="radio" [(ngModel)]="radioValue" name="exampleRadios" id="exampleRadios1" value="-1" (click)="onSaveAddress(-1)" checked>
+      <label class="form-check-label" for="exampleRadios1">
+        Add new Address
+      </label>
+    </div>
+    <form [formGroup]="deliveryForm" *ngIf="radioValue==-1" class="row g-3">
+        <div class="col-md-6" >
+          <label for="inputEmail4" class="form-label">Name</label>
+          <input type="text" class="form-control" id="inputEmail4" formControlName="name"
+          [ngClass]="{ 'is-invalid':submitted &&  g['name'].errors }" />
+                <div *ngIf="submitted && g['name'].errors" class="invalid-feedback">
+                  <div *ngIf="g['name'].errors['required']">name is required</div>
+                </div>
+        </div>
+        <div class="col-md-6" >
+          <label for="inputPassword4" class="form-label">Phone</label>
+          <input type="number" class="form-control" id="inputPassword4" formControlName="phone"
+          [ngClass]="{ 'is-invalid':submitted &&  g['phone'].errors }" >
+                <div *ngIf="submitted && g['phone'].errors" class="invalid-feedback">
+                  <div *ngIf="g['phone'].errors['required']">phone is required</div>
+                  <div *ngIf="g['phone'].errors['pattern']">Invalid phone</div>
+                </div>
+        </div>
+        <div class="col-12" >
+          <label for="inputAddress" class="form-label">Address</label>
+          <input type="text" class="form-control" id="inputAddress" placeholder="e.g : Time Square, New-York"
+          formControlName="address" [ngClass]="{ 'is-invalid':submitted &&  g['address'].errors }" >
+          <div *ngIf="submitted && g['address'].errors" class="invalid-feedback">
+            <div *ngIf="g['address'].errors['required']">address is required</div>
+            
+          </div>
+        </div>
+        <div class="col-md-6" >
+          <label for="inputCity" class="form-label">City</label>
+          <input type="text" class="form-control" id="inputCity" formControlName="city"
+          [ngClass]="{ 'is-invalid':submitted &&  g['city'].errors }" >
+                <div *ngIf="submitted && g['city'].errors" class="invalid-feedback">
+                  <div *ngIf="g['city'].errors['required']">city is required</div>
+                </div>
+        </div>
+        <div class="col-md-4">
+          <label for="inputState" class="form-label">State</label>
+          <select id="inputState" class="form-select" formControlName="state"
+          [ngClass]="{ 'is-invalid':submitted &&  g['state'].errors }" >
+            <option selected disabled>Select</option>
+            <option>Rajasthan</option>
+            <option>Telangana</option>
+            <option>Karnataka</option>
+          </select>
+          <div *ngIf="submitted && g['state'].errors" class="invalid-feedback">
+            <div *ngIf="g['state'].errors['required']">state is required</div>
+          </div>
+        </div>
+        <div class="col-md-2" >
+          <label for="inputZip" class="form-label">Zip</label>
+          <input type="text" class="form-control" id="inputZip" formControlName="zip"
+          [ngClass]="{ 'is-invalid':submitted &&  g['zip'].errors }">
+                <div *ngIf="submitted && g['zip'].errors" class="invalid-feedback">
+                  <div *ngIf="g['zip'].errors['required']">zip is required</div>
+                  <div *ngIf="g['zip'].errors['pattern']">Invalid zip</div>
+                </div>
+        </div>
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary" *ngIf="(!disableAddressInput)" (click)="saveAddress()">Proceed</button>
+          <button type="submit" class="btn btn-primary" *ngIf="showupdate" (click)="editDeliveryAddress()">update</button> &nbsp;
+          <button type="submit" class="btn btn-secondary" *ngIf="showupdate" (click)="cancel()">Cancel</button>
+        </div>
+    </form>
+</div>
+
+<div class="container mt-5">
+    <H3>Card Payment</H3><br>
+    <form class="mb-5" (ngSubmit)="buy()" [formGroup]="stripeForm"> 
+        <div class="form-group"> 
+            <input type="text" class="form-control" formControlName="name" placeholder="Full Name*" 
+            [ngClass]="{ 'is-invalid':submitted &&  f['name'].errors }" >
+            <span *ngIf="submitted && f['name'].errors" class="invalid-feedback">
+                <span *ngIf="f['name'].errors['required']">required</span>
+            </span> 
+        </div> 
+        <div class="form-group"> 
+            <input type="number" class="form-control" formControlName="amount" placeholder="Amount*" 
+            [ngClass]="{ 'is-invalid':submitted &&  f['amount'].errors }" >
+            <span *ngIf="submitted && f['amount'].errors" class="invalid-feedback">
+                <span *ngIf="f['amount'].errors['required']">required</span>
+            </span>
+        </div> 
+        <div class="form-group"> 
+            <div id="card-element" class="field"></div> 
+        </div> 
+        <button class="btn btn-warning w-25 border shadow" type="submit"> 
+            BUY 
+        </button> 
+    </form>
+</div>
+</b></body>
+
+<div *ngIf="paymentStatus" class="_3lkB" style="height: 80vh;">
+  <div class="_1VrC" style="background: url(./assets/img/payment/payment-success.png);">
+  </div><div class="_35Zs">Wolla! Payment Success</div>
+  <div class="u7FL">
+      Feel like shopping  &amp; Availing offers
+  </div>
+  <div class="_10pq">
+      <a href="#" routerLink="/home" style="text-decoration:none" class="_1fP-" target="_self"><b>Go to Home</b></a>
+  </div>
+</div>
+
+

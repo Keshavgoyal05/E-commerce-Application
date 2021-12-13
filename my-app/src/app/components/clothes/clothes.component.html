@@ -1,0 +1,60 @@
+<div>
+    <div class="row mb-0">
+        <div class="thumbnail">
+          <a>
+            <img src="./assets/img/products/cloth1.jpeg" alt="Lights" style="width:100%">
+          </a>
+        </div>
+    </div>
+  </div>
+  
+  <div mb-3>
+  <div class="row">
+    <div class="side">
+      <div class="container">
+      <strong style="font-size: 25px;">Filter</strong>
+      <div style="float: right;">
+        <button class="btn btn-primary btn-md" (click)="applyFilter()">Apply</button> &nbsp;
+        <button class="btn btn-danger btn-md" (click)="clearFilter()" style="float: right;">Clear</button>
+      </div>
+      <hr>
+      <h5>Department</h5>
+      <div class="chip"><strong>{{category}}</strong></div><br><hr>
+      <h5>category</h5>
+      <select class="form-select form-select-md mb-3" [(ngModel)]="selectedSubCategory" aria-label=".form-select-lg example">
+        <option value="select" selected>select category</option>
+        <option value="{{item}}"  *ngFor="let item of subcategory">{{item}}</option>
+      </select><hr>
+      <label for="customRange3" class="form-label">Price Range : 0 - {{priceRange}}</label>
+      <input type="range" class="form-range" [(ngModel)]="priceRange" min="0" max="10000" step="100" id="customRange3"><br>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="exampleRadios"  value=ascSort [(ngModel)]="radioSelected"   checked>
+        <label class="form-check-label" for="exampleRadios1">Price : Low to High</label><br><br>
+        <input class="form-check-input" type="radio" name="exampleRadios"  value=descSort [(ngModel)]="radioSelected"  checked>
+        <label class="form-check-label" for="exampleRadios1">Price : High to Low</label>
+      </div>
+
+    </div>
+    </div>
+    <div class="main">
+      <div class="row">
+        <div class="col" *ngFor="let item of arrProducts | clothesFilter:apply:selectedSubCategory:priceRange:radioSelected">
+            <div class="card text-white bg-dark mb-3" style="width:20rem;border-radius:10px;">
+                <img src={{item.image}} class="card-img-top cartitems" style="object-fit:cover;" alt="Mike">
+                <div class="card-body">
+                  <h5 class="card-title">{{item.name}}</h5>
+                  <p class="title">{{item.subcategory}}</p>
+                  <p class="card-text">You won't like until you try it</p>
+                  <p class="card-text"><small>{{item.price | currency : 'INR'}}&nbsp;<del>{{item.discount | currency : 'INR'}}</del></small></p>
+                  <div>
+                    <a  class="btn btn-primary cartclick" (click)="addItemToCart(item)">Add To Cart</a>
+                    <b style="float: right;">{{item.rating}}<i class="fas fa-star icon"></i></b>
+                  </div>
+                </div>
+            </div>
+        </div>
+      </div> 
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

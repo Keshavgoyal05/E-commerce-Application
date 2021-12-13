@@ -1,0 +1,132 @@
+
+<div class="container"> 
+    <div style="margin-top: 2%; margin-bottom: 1%;">
+        <input type="text" [(ngModel)]='searchById' placeholder="Serach By Id"> &nbsp;&nbsp;
+        <input type="text" [(ngModel)]='searchByName' placeholder="Search By Name">
+        <button class="btn btn-danger btn-sm" style="float: right;" (click)="clear()">Clear</button>
+    </div>
+    <table class="table table-hover m-t-4"> 
+      <thead class="thead-dark"> 
+        <tr> 
+          <th *ngFor="let header of user_column">{{header}}</th> 
+        </tr> 
+      </thead> 
+      <tbody> 
+        <tr *ngFor="let row of arrUser | userFilter:searchById | userFilter:searchByName"> 
+          <td>{{row.user_id}}</td> 
+          <td>{{row.firstName}}</td> 
+          <td>{{row.lastName}}</td> 
+          <td>{{row.email}}</td> 
+          <td>{{row.phone}}</td>
+          <td>{{row.whatsappNo}}</td>
+          <td>{{row.password}}</td>
+          <td>
+            <button (click)="deleteUserRecord(row.user_id)" class="btn btn-danger btn-sm">Delete</button> &nbsp;
+            <button (click)="onEditUserRecord(row)" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#UserModal">Edit</button>
+          </td> 
+        </tr> 
+      </tbody> 
+    </table>
+    <button type="button" class='btn btn-success btn-sm' (click)="clickAddButton()" data-bs-toggle="modal" data-bs-target="#UserModal">Insert Record</button>&nbsp;
+</div><br>
+
+<div class="modal fade" id="UserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">User Table</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="form">
+            <div class="row">
+              <div class="col">
+                <input type="text"  formControlName="firstName" name="firstName" class="form-control" placeholder="First Name" 
+                [ngClass]="{ 'is-invalid':submitted &&  f['firstName'].errors }">
+                
+                  <div *ngIf="submitted && f['firstName'].errors" class="invalid-feedback">
+                    <div *ngIf="f['firstName'].errors['required']">First Name is required</div>
+                  </div>
+                  
+              </div>
+              <div class="col">
+                <input type="text" formControlName="lastName" class="form-control" placeholder="Last Name" 
+                [ngClass]="{ 'is-invalid':submitted &&  f['lastName'].errors }">
+                
+                  <div *ngIf="submitted && f['lastName'].errors" class="invalid-feedback">
+                    <div *ngIf="f['lastName'].errors['required']">Last Name is required</div>
+                  </div>
+
+              </div>
+            </div>
+            <div class="mt-3">
+              <input type="text" formControlName="email" class="form-control" placeholder="Email" 
+              [ngClass]="{ 'is-invalid':submitted &&  f['email'].errors }">
+                
+                <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+                  <div *ngIf="f['email'].errors['required']">Email is required</div>
+                  <div *ngIf="f['email'].errors['pattern']">Email not valid.</div>
+                </div>
+
+            </div>
+            <div class="row mt-3">
+              <div class="col">
+                <input type="text" formControlName="phone" class="form-control" placeholder="Phone" 
+                [ngClass]="{ 'is-invalid':submitted &&  f['phone'].errors }" >
+                
+                <div *ngIf="submitted && f['phone'].errors" class="invalid-feedback">
+                  <div *ngIf="f['phone'].errors['required']">Phone is required</div>
+                  <div *ngIf="f['phone'].errors['pattern']">Invalid Phone</div>
+                </div>
+              </div>
+              <div class="col">
+                <input type="text" formControlName="whatsappNo" class="form-control" placeholder="Whatsapp No. (if any)" 
+                [ngClass]="{ 'is-invalid':submitted &&  f['whatsappNo'].errors }" >
+                
+                <div *ngIf="submitted && f['whatsappNo'].errors" class="invalid-feedback">
+                  <div *ngIf="f['whatsappNo'].errors['pattern']">Invalid Whatsapp</div> 
+                </div>
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col">
+                <input type="text" formControlName="password" class="form-control" placeholder="Password" 
+                [ngClass]="{ 'is-invalid':submitted &&  f['password'].errors }" >
+                
+                <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
+                  <div *ngIf="f['password'].errors['required']">Password is required</div>
+                  
+                  <div *ngIf="f['password'].errors['maxlength']">
+                    Password must not exceed 20 characters
+                  </div>
+                  <div *ngIf="f['password'].errors['check']">
+                    Minimum 8 characters, at least one uppercase letter, 
+                    one lowercase letter and one number
+                  </div> 
+                </div>
+                  
+              </div>
+              <div class="col">
+                <input type="text" formControlName="confirmPassword" class="form-control" placeholder=" Confirm Password" 
+                [ngClass]="{ 'is-invalid':submitted &&  f['confirmPassword'].errors }" >
+                
+                <div *ngIf="submitted && f['confirmPassword'].errors" class="invalid-feedback">
+                  <div *ngIf="f['confirmPassword'].errors['required']">required</div>
+                  
+                  <div *ngIf="f['confirmPassword'].errors['matching']">
+                    password do not match
+                  </div>  
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" *ngIf="showAdd" class="btn btn-primary" (click)="insertUserRecord()">Add</button>
+          <button type="button" *ngIf="showUpdate" class="btn btn-primary" (click)="editUserRecord()">Update</button>
+        </div>
+      </div>
+    </div>
+</div>
+

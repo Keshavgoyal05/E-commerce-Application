@@ -1,0 +1,14 @@
+.modal{
+    background-image: linear-gradient(
+        #c31432,
+        #240b36);
+}
+.modal-content{
+    background-color: rgb(211, 233, 219);
+}
+.center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}

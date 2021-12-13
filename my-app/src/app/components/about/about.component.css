@@ -1,0 +1,45 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+}
+.column {
+    width: 33.3%;
+}
+.container{
+    margin-left: 8%;
+    margin-top: 4%;
+    margin-bottom: 8%;
+}
+.card{
+    background-color: #c5ced4;
+    border:none;
+    
+}
+img{
+    border-radius: 5px;
+    height: 200px;
+}
+.about-section {
+    text-align: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    
+}
+.title {
+    color: grey;
+}
+.btn{
+      width: 100%;
+      border-radius: 5px;
+      background-color: rgb(14, 87, 245);
+}
+.btn:hover {
+    background-color: rgb(74, 74, 75);
+}
+
+@media screen and (max-width: 650px) {
+    .column {
+      width: 100%;
+      display: block;
+    }
+}

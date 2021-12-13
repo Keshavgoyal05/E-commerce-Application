@@ -1,0 +1,47 @@
+<div > 
+    <div class="row">
+        <img src="./assets/img/about/about-bg.jpeg" style="width: 100%;height: 200px;object-fit: cover;">
+    </div>
+
+    <div class="row row1 body">
+        <div class="col-lg-7 mx-auto">
+            <div class="container">
+                <form id="contact-form" role="form">
+                    <div class="controls">
+                        <div class="row">
+                            <div class="col-md-6 mt-3">
+                                <div class="form-group"> <input id="form_name" type="text" name="name" class="form-control" placeholder="Please enter your firstname" required="required" data-error="Firstname is required."> </div>
+                            </div>
+                            <div class="col-md-6 mt-3">
+                                <div class="form-group"> <input id="form_lastname" type="text" name="surname" class="form-control" placeholder="Please enter your lastname" required="required" data-error="Lastname is required."> </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mt-3">
+                                <div class="form-group">  <input id="form_email" type="email" name="email" class="form-control" placeholder="Please enter your email" required="required" data-error="Valid email is required."> </div>
+                            </div>
+                            <div class="col-md-6 mt-3">
+                                <div class="form-group"> <select id="form_need" name="need" class="form-control" required="required" data-error="Please specify your need.">
+                                        <option value="" selected disabled>Select Issue--</option>
+                                        <option>Request Invoice for order</option>
+                                        <option>Request order status</option>
+                                        <option>Haven't received cashback yet</option>
+                                        <option>Other</option>
+                                    </select> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 mt-3">
+                                <div class="form-group"> <textarea id="form_message" name="message" class="form-control" placeholder="Write your message here." rows="4" required="required" data-error="Please, leave us a message."></textarea> </div>
+                            </div>
+                            <div class="col-md-12 mt-3 mb-3"> <input type="submit" class="btn btn-success btn-send pt-2 btn-block" (click)="sendEmail()" value="Send Message" style="width: 100%;"> </div>
+                        </div>
+                    </div>
+                </form>
+            </div> 
+        </div> 
+    </div>
+</div>
+
+<app-footer></app-footer>

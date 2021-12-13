@@ -1,0 +1,211 @@
+<div class="container-fluid center">
+    <div class="row d-flex justify-content-center align-items-center h-100" style="margin-top: -110px;">
+      <div class="col-md-9 col-lg-6 col-xl-5">
+        <img src="https://st4.depositphotos.com/16138592/29248/v/950/depositphotos_292484278-stock-illustration-user-login-vector-flat-illustration.jpg" class="img-fluid"
+          alt="Sample image">
+      </div>
+      <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+        <form [formGroup]="form" (ngSubmit)="login()">
+          <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
+            <h3><b>Your Privacy Matters !</b></h3>
+          </div><br>
+          <!-- Email input -->
+          <div class="form-outline mb-4">
+            <input type="email" id="form3Example3" formControlName="email" class="form-control form-control-lg"
+              placeholder="Enter a valid email address" [ngClass]="{ 'is-invalid':submitted &&  f['email'].errors }">
+                <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+                  <div *ngIf="f['email'].errors['required']">Email is required</div>
+                </div>
+          </div>
+          <!-- Password input -->
+          <div class="form-outline mb-3">
+            <input type="password" id="form3Example4" formControlName="password" class="form-control form-control-lg"
+              placeholder="Enter password" required [ngClass]="{'is-invalid':submitted &&  f['password'].errors }">  
+              <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
+                <div *ngIf="f['password'].errors['required']">Password is required</div>
+              </div>
+          </div>
+          <div class="d-flex justify-content-between align-items-center">
+            <!-- Checkbox -->
+            <div class="form-check mb-0">
+              <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" required />
+              <label class="form-check-label" for="form2Example3">
+                Remember me
+              </label>
+            </div>
+            <a class="link-danger" data-bs-toggle="modal" data-bs-target="#ForgotPasswordModal">Forgot password?</a>
+          </div>
+          <div class="text-center text-lg-start mt-4 pt-2">
+            <button type="submit" class="btn btn-primary btn-lg"
+              style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
+            <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? 
+              <a class="link-primary" data-bs-toggle="modal" data-bs-target="#RegisterModal" (click)="onRegister()">Register</a></p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="RegisterModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Register</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="close()" aria-label="Close"></button>
+        </div>
+        <form [formGroup]="form" (ngSubmit)="register()"> 
+          <div class="modal-body">
+              <div class="row">
+                <div class="col">
+                  <input type="text"  formControlName="firstName" name="firstName" class="form-control" placeholder="First Name" 
+                  [ngClass]="{ 'is-invalid':submitted &&  f['firstName'].errors }">
+                  
+                    <div *ngIf="submitted && f['firstName'].errors" class="invalid-feedback">
+                      <div *ngIf="f['firstName'].errors['required']">First Name is required</div>
+                    </div>
+                    
+                </div>
+                <div class="col">
+                  <input type="text" formControlName="lastName" class="form-control" placeholder="Last Name" 
+                  [ngClass]="{ 'is-invalid':submitted &&  f['lastName'].errors }">
+                  
+                    <div *ngIf="submitted && f['lastName'].errors" class="invalid-feedback">
+                      <div *ngIf="f['lastName'].errors['required']">Last Name is required</div>
+                    </div>
+
+                </div>
+              </div>
+              <div class="mt-3">
+                <input type="text" formControlName="email" class="form-control" placeholder="Email" 
+                [ngClass]="{ 'is-invalid':submitted &&  f['email'].errors }">
+                  
+                  <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+                    <div *ngIf="f['email'].errors['required']">Email is required</div>
+                    <div *ngIf="f['email'].errors['pattern']">Email is invalid</div>
+                  </div>
+
+              </div>
+              <div class="row mt-3">
+                <div class="col">
+                  <input type="text" formControlName="phone" class="form-control" placeholder="Phone" 
+                  [ngClass]="{ 'is-invalid':submitted &&  f['phone'].errors }" >
+                  
+                  <div *ngIf="submitted && f['phone'].errors" class="invalid-feedback">
+                    <div *ngIf="f['phone'].errors['required']">Phone is required</div>
+                    <div *ngIf="f['phone'].errors['pattern']">Invalid Phone</div>
+                  </div>
+                </div>
+                <div class="col">
+                  <input type="text" formControlName="whatsappNo" class="form-control" placeholder="Whatsapp No. (if any)" 
+                  [ngClass]="{ 'is-invalid':submitted &&  f['whatsappNo'].errors }" >
+                  
+                  <div *ngIf="submitted && f['whatsappNo'].errors" class="invalid-feedback">
+                    <div *ngIf="f['whatsappNo'].errors['pattern']">Invalid Whatsapp</div> 
+                  </div>
+                </div>
+              </div>
+              <div class="row mt-3">
+                <div class="col">
+                  <input type="password" formControlName="password" class="form-control" placeholder="Password" 
+                  [ngClass]="{ 'is-invalid':submitted &&  f['password'].errors }" >
+                  
+                  <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
+                    <div *ngIf="f['password'].errors['required']">Password is required</div>
+                    
+                    <div *ngIf="f['password'].errors['maxlength']">
+                      Password must not exceed 20 characters
+                    </div>
+                    <div *ngIf="f['password'].errors['check']">
+                      Minimum 8 characters, at least one uppercase letter, 
+                      one lowercase letter and one number
+                    </div> 
+                  </div>
+                    
+                </div>
+                <div class="col">
+                  <input type="password" formControlName="confirmPassword" class="form-control" placeholder=" Confirm Password" 
+                  [ngClass]="{ 'is-invalid':submitted &&  f['confirmPassword'].errors }" >
+                  
+                  <div *ngIf="submitted && f['confirmPassword'].errors" class="invalid-feedback">
+                    <div *ngIf="f['confirmPassword'].errors['required']">required</div>
+                    
+                    <div *ngIf="f['confirmPassword'].errors['matching']">
+                      password do not match
+                    </div>  
+                  </div>
+                </div>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit"  class="btn btn-primary" >Sign Up</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="ForgotPasswordModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Forgot Password</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="close()" aria-label="Close"></button>
+        </div>
+         
+          <div class="modal-body">
+            <form [formGroup]="forgotPasswordForm">
+            <div class="mt-3">
+              <input type="text" formControlName="email" class="form-control" placeholder="Enter Registered Email" 
+              [ngClass]="{ 'is-invalid':submitted &&  g['email'].errors }">
+                <div *ngIf="submitted && g['email'].errors" class="invalid-feedback">
+                  <div *ngIf="g['email'].errors['required']">required</div>
+                  <div *ngIf="g['email'].errors['email']">Email is invalid</div>
+                </div>
+            </div>
+            <div *ngIf="showOtp">
+              <div class="mt-3">
+                <input type="text" formControlName="otp" class="form-control" placeholder="Enter Received OTP" 
+                [ngClass]="{ 'is-invalid':submitted &&  g['otp'].errors }">
+                  <div *ngIf="submitted && g['otp'].errors" class="invalid-feedback">
+                    <div *ngIf="g['otp'].errors['required']">required</div>
+                  </div>
+              </div>
+              <div class="row mt-3">
+                <div class="col">
+                  <input type="text" formControlName="password" class="form-control" placeholder="Password" 
+                  [ngClass]="{ 'is-invalid':submitted &&  g['password'].errors }" >
+                  <div *ngIf="submitted && g['password'].errors" class="invalid-feedback">
+                    <div *ngIf="g['password'].errors['required']">required</div>
+                    <div *ngIf="g['password'].errors['maxlength']">
+                      Password must not exceed 20 characters
+                    </div>
+                    <div *ngIf="g['password'].errors['check']">
+                      Minimum 8 characters, at least one uppercase letter, 
+                      one lowercase letter and one number
+                    </div> 
+                  </div>  
+                </div>
+                <div class="col">
+                  <input type="text" formControlName="confirmPassword" class="form-control" placeholder=" Confirm Password" 
+                  [ngClass]="{ 'is-invalid':submitted &&  g['confirmPassword'].errors }" >
+                  <div *ngIf="submitted && g['confirmPassword'].errors" class="invalid-feedback">
+                    <div *ngIf="g['confirmPassword'].errors['required']">required</div>
+                    <div *ngIf="g['confirmPassword'].errors['matching']">
+                      password do not match
+                    </div>  
+                  </div>
+                </div>
+              </div>
+            </div> 
+          </form>  
+          </div>
+          <div class="modal-footer">
+            <button type="submit" *ngIf="showSend" class="btn btn-primary" (click)="sendOtp()">Send Email</button>
+            <button type="submit" *ngIf="showSave" class="btn btn-success" (click)="changePassword()">Save</button>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+

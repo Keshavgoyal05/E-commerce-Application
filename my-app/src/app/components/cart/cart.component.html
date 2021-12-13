@@ -1,0 +1,90 @@
+<div *ngIf="totalCartItem!=0" class="container-fluid">
+    <div class="row">
+        <aside class="col-lg-9">
+            <div class="card">
+                <div class="table-responsive">
+                    <table class="table table-borderless table-shopping-cart">
+                        <thead style="text-align:left" class="text-dark bg-primary">
+                            <tr class="small text-uppercase">
+                                <th scope="col">Product</th>
+                                <th scope="col" width="120">Quantity</th>
+                                <th scope="col" width="120">Price</th>
+                                <th scope="col" width="200">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of arrCart">
+                                <td>
+                                    <figure class="itemside align-items-center">
+                                        <div class="aside"><img src="{{item.image}}" class="img-sm"></div>
+                                        <figcaption class="info"> <a href="#" class="title text-dark" data-abc="true">{{item.product_name}}</a>
+                                            <p class="text-muted small">Type:{{item.product_subcategory}} <br> <small class="text-muted"> {{item.price | currency : 'INR'}} each </small> </p>
+                                        </figcaption>
+                                    </figure>
+                                </td>
+                                <td><select class="form-control">
+                                        <option selected>{{item.quantity}}</option>
+                                    </select> 
+                                </td>
+                                <td>
+                                    <div class="price-wrap"> <b class="price">{{item.price * item.quantity  | currency : 'INR'}}</b> </div>
+                                </td>
+                                <td><a data-original-title="Save to Wishlist" title=""  class="btn btn-light" data-toggle="tooltip" data-abc="true"> <i class="fa fa-heart"></i></a>&nbsp; <a  class="btn btn-light" (click)="deleteCartRecord(item.cart_id)" data-abc="true"> Remove</a> </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </aside>
+        <aside class="col-lg-3">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <form>
+                        <div class="form-group"> <label>Have coupon?</label>
+                            <div class="input-group"> <input type="text" class="form-control coupon" [(ngModel)]="coupon_code" [ngModelOptions]="{standalone: true}" placeholder="Coupon code"> <span class="input-group-append"> <button class="btn btn-primary btn-md coupon" (click)="applyCoupon()">Apply</button> </span> </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <dl class="dlist-align">
+                        <dt>Cart price:</dt>
+                        <dd class="text-right text-primary ml-3">&nbsp;&nbsp;{{arrCart | cartFilter | currency : 'INR'}}</dd>
+                    </dl>
+                    <dl class="dlist-align">
+                        <dt>Discount:</dt>
+                        <dd class="text-right text-danger ml-3"> &nbsp;{{discount  | currency : 'INR'}} </dd>
+                    </dl>
+                    <dl class="dlist-align">
+                        <dt>Delivery:</dt>
+                        <dd class="text-right text-success ml-3"> &nbsp;&nbsp;{{delivery | currency : 'INR'}}</dd>
+                    </dl>
+                    <dl class="dlist-align">
+                        <dt>Total:</dt>
+                        <dd class="text-right text-dark b ml-3"><strong>&nbsp;&nbsp;{{totalPrice | currency : 'INR'}}</strong></dd>
+                    </dl>
+                    <hr> <a  routerLink="/payment" class="btn btn-out btn-primary btn-square btn-main" data-abc="true" > Make Purchase </a> <a routerLink="/home" class="btn btn-out btn-success btn-square btn-main mt-2" data-abc="true">Continue Shopping</a>
+                </div>
+            </div>
+        </aside>
+    </div>
+</div>
+
+<br>
+
+<div *ngIf="totalCartItem==0" class="_3lkB" style="height: 80vh;">
+    <div class="_1VrC" style="background: url(./assets/img/cart/empty-cart.png);">
+    </div><div class="_35Zs">Oops! Your Cart is Empty</div>
+    <div class="u7FL">
+        Get some amazing products &amp; offers
+    </div>
+    <div class="_10pq">
+        <a href="/" class="_1fP-" target="_self">Continue Shopping</a>
+    </div>
+</div>
+
+
+
+
+  
