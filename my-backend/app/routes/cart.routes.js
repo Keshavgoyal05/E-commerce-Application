@@ -11,6 +11,8 @@ module.exports = app => {
 
     router.delete("/deleteCartItem/:id", cart.deleteCartItem);
 
+    router.delete("/emptyCart/:userid", cart.emptyCart);
+
     router.put("/updateCartItem",cart.updateCartItem);
     
     app.use("/cart", router);

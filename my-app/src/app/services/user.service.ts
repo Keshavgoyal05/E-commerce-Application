@@ -16,7 +16,7 @@ export class UserService {
   LoginUser(loginObj : any) : Observable<any> {
     var URL = this.baseURL + "/login"; 
     let header ={'content-type' : 'application/json'}; 
-    return this.http.post(URL, loginObj, {'headers' : header , responseType : 'text'}) ; 
+    return this.http.post(URL, loginObj, {'headers' : header , responseType : 'json'}) ; 
   } 
   RegisterUser (registerObj : any) : Observable<any> { 
     var URL = this.baseURL + "/register"; 

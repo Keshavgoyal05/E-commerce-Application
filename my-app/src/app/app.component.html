@@ -31,7 +31,16 @@
         </a>
       </li>&nbsp;&nbsp;
       <li *ngIf="!login"><a class="nav-link" routerLinkActive="active" routerLink="/login"><i class="fas fa-user"></i> Login</a></li>
-      <li *ngIf="login"><a  class="nav-link" routerLinkActive="deactive" (click)="logout()" routerLink="/home">Log out</a></li>
+      <li *ngIf="login" class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" routerLinkActive="active"  id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Setting
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <li><a class="dropdown-item" routerLinkActive="active" routerLink="/order">Orders</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" routerLinkActive="deactive" (click)="logout()" routerLink="/home">Log Out</a></li>
+        </ul>
+      </li>
     </ul>
     
   </div>

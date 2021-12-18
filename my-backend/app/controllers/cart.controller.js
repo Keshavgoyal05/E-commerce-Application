@@ -60,13 +60,28 @@ exports.updateCartItem = (req, res) => {
 
 //Delete the record by ID. 
 exports.deleteCartItem = (req, res) => { 
-  console.log("Entering deleteStudent"); 
+  console.log("Entering in delete cart record"); 
   var id = req.params.id; 
-  console.log("Given id is : "+id); 
+  console.log("Given cart id is : "+id); 
   Cart.destroy ({where : {cart_id : id}}).then ( data => { 
       console.log(data); 
       var strmsg = "Record deleted successfully..."; 
       res.status (200). send (strmsg); 
+  }).catch ( err => { 
+      console.error("There is an error deleting a record : "+err); 
+      res.status (400).send (err); 
+  }) 
+};
+
+exports.emptyCart = (req, res) => { 
+  console.log("Entering emptyCart"); 
+  var userid = req.params.userid; 
+  console.log("Given user id is : "+userid); 
+  Cart.destroy ({where : {user_id : userid}}).then ( data => { 
+      console.log(data);
+      res.status(200).send({
+        message : "Cart has been made empty"
+      }); 
   }).catch ( err => { 
       console.error("There is an error deleting a record : "+err); 
       res.status (400).send (err); 

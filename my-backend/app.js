@@ -19,6 +19,7 @@ require("./app/routes/clothes.routes")(app);
 require("./app/routes/cart.routes")(app);
 require("./app/routes/payment.routes")(app);
 require("./app/routes/delivery.routes")(app);
+require("./app/routes/order.routes")(app);
 
 
 

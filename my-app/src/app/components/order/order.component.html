@@ -1,0 +1,31 @@
+<div class="container"> 
+    <div style="margin-top: 2%; margin-bottom: 1%;">
+        <select class="form-select form-select-md mb-3" style="float: right;width: 150px;" [(ngModel)]="orderFilterCreteria" aria-label=".form-select-lg example">
+          <option value="All" selected>All orders</option>
+          <option value="Active">Active orders</option>
+          <option value="Past">Past orders</option>
+          <option value="Canceled">Canceled orders</option>
+        </select>
+    </div>
+    <table class="table table-hover m-t-4"> 
+      <thead class="thead-dark"> 
+        <tr> 
+          <th *ngFor="let header of order_column">{{header}}</th> 
+        </tr> 
+      </thead> 
+      <tbody> 
+        <tr *ngFor="let row of arrOrders | orderFilter:orderFilterCreteria">  
+          <td>{{row.order_id}}</td>
+          <td>{{row.purchase_date}}</td> 
+          <td>{{row.delivery_address}}</td>
+          <td>{{row.order_status}}</td>
+          <td>{{row.payment_status}}</td>
+          <td>{{row.phone}}</td> 
+          <td>{{row.product_id}}</td> 
+          <td>{{row.quantity}}</td> 
+          <td>{{row.price}}</td>
+        </tr> 
+      </tbody> 
+    </table>
+</div>
+

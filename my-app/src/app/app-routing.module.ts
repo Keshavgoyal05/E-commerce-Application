@@ -6,6 +6,7 @@ import { CartComponent } from './components/cart/cart.component';
 import { ClothesComponent } from './components/clothes/clothes.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { HomeComponent } from './components/home/home.component';
+import { OrderComponent } from './components/order/order.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { PaymentComponent } from './components/payment/payment.component';
 import { UserComponent } from './components/user/user.component';
@@ -20,6 +21,7 @@ const routes : Routes = [
   {path : 'contact', component : ContactComponent,canActivate:[AuthguardService]},
   {path : 'clothes', component : ClothesComponent,canActivate:[AuthguardService]},
   {path : 'payment', component : PaymentComponent,canActivate:[AuthguardService]},
+  {path : 'order', component : OrderComponent,canActivate:[AuthguardService]},
   {path : 'login', component : UserComponent},
   {path : '**', component : PageNotFoundComponent}, 
 ];

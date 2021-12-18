@@ -87,7 +87,7 @@ export class UserComponent implements OnInit {
       ( 
         (data) => 
         {
-          data = JSON.parse(data);
+          //data = JSON.parse(data);
           alert(data.message);
           if(data.login==true){
             console.log("login : success");
@@ -101,7 +101,7 @@ export class UserComponent implements OnInit {
         }, 
         (error) => 
         {
-          alert(JSON.stringify(error));
+          alert(error.error.message);
           console.log("Login failed" + error.getMessage);
         }
       );

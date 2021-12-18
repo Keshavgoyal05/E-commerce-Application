@@ -1,4 +1,3 @@
-const { user } = require("../db.config");
 const db = require("../models");
 const sendmail = require("./mail.controller");
 const whatsapp = require("./whatsapp.controller");
@@ -58,7 +57,7 @@ exports.login = (req, res) => {
         }
         else{
           console.log("wrong password");
-          return res.status(201).send({
+          return res.status(401).send({
           message: "Wrong Password"
           });
         }

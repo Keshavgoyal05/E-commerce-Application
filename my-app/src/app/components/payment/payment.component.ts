@@ -4,6 +4,8 @@ import { StripeService } from "ngx-stripe";
 import { PaymentService } from 'src/app/services/payment.service';
 import { StripeCardElementOptions, StripeElementsOptions } from '@stripe/stripe-js';
 import { DeliveryService } from 'src/app/services/delivery.service';
+import { OrderService } from 'src/app/services/order.service';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-payment',
@@ -12,7 +14,7 @@ import { DeliveryService } from 'src/app/services/delivery.service';
 })
 export class PaymentComponent implements OnInit {
 
-  constructor(private fb : FormBuilder, private stripeService : StripeService, private paymentService : PaymentService, private deliveryService : DeliveryService) { 
+  constructor(private fb : FormBuilder, private stripeService : StripeService, private paymentService : PaymentService, private deliveryService : DeliveryService, private orderService : OrderService, private cartService : CartService) { 
     this.userid =localStorage.getItem('userid');
     
   }
@@ -57,6 +59,7 @@ export class PaymentComponent implements OnInit {
       zip : ['', [Validators.required,Validators.pattern("^[1-9][0-9]{5}$")]]
     });
     this.readDeliveryData();
+    this.readCartData();
     this. loading = false; 
     this.createForm(); 
     
@@ -123,6 +126,7 @@ export class PaymentComponent implements OnInit {
               this. submitted = false; 
               this.paymentStatus = true;
               alert(this.paymentStatus+res['msg']);
+              this.addOrder();
             } 
             else{ 
               this. loading = false; 
@@ -216,7 +220,7 @@ export class PaymentComponent implements OnInit {
       },
       (error) =>
       {
-        alert("some error in fetching data");
+        alert("some error in fetching deliver data");
         console.log (error);
       } 
     );
@@ -279,6 +283,95 @@ export class PaymentComponent implements OnInit {
   close(){
     this.submitted = false;
     this.deliveryForm.reset();
+  }
+
+  arrCart : any[]=[];
+  totalCartItem:any;
+  readCartData() 
+  { 
+    this.cartService.getCart(this.userid).subscribe
+    ( 
+      (data) => 
+      { 
+        this.arrCart = data;
+        this.totalCartItem=this.arrCart.length; 
+      }, 
+      (error) => console.log (error)
+    );
+  }
+
+  addOrder(){
+    this.deliveryService.getDeliveryDataById(this.userid,this.radioValue).subscribe
+    ( 
+      (data) => 
+      {
+        let delivery_address = `${data[0].name}, ${data[0].address}, ${data[0].city}, ${data[0].state}, ${data[0].zip}`;
+        let order = {
+          "user_id" : this.userid,
+          "purchase_date" : new Date().toISOString().slice(0, 10),
+          "delivery_address" : delivery_address,
+          "payment_status" : "success",
+          "phone" : data[0].phone
+        }
+        this.orderService.addOrder(order).subscribe 
+        ( 
+          (data) => 
+          { 
+            console.log("order added successfully");
+            alert(data.message);
+            let order_id= data.order_id;
+            let productOrder: { user_id: any; order_id: any; order_status: any, product_id: any; quantity: any; price: number; }[] =[];
+            this.arrCart.forEach((item,index)=>{
+                productOrder.push(
+                  {
+                    "user_id" : this.userid,
+                    "order_id" : order_id,
+                    "order_status" : "ordered",
+                    "product_id" : item.product_id,
+                    "quantity" : item.quantity,
+                    "price" : item.price * item.quantity
+                  }
+                );
+            })
+            this.orderService.addProductOrderFromcart(productOrder).subscribe 
+            ( 
+              (data) => 
+              { 
+                console.log("all cart products added to productOrder Table successfully");
+                alert(data.message);
+                this.cartService.emptyCart(this.userid).subscribe 
+                ( 
+                  (data) => 
+                  { 
+                    alert(data.message); 
+                  }, 
+                  (error) => 
+                  {
+                    console.log ("Unabled to empty cart because " + error.getMessage);
+                    alert("unable to empty cart");
+                  } 
+                );
+              }, 
+              (error) =>
+              {
+                console.log("Unabled to add cart products to productOrder Table : " + error.error.message);
+                alert("Unabled to add cart products to productOrder Table : " + error.error.message);
+              } 
+            );
+          }, 
+          (error) =>
+          {
+            console.log("Unabled to add order to DB because" + error.error.message);
+            alert("post order failed : "+error.error.message);
+          } 
+        );
+      },
+      (error) =>
+      {
+        alert("some error in fetching delivery data");
+        console.log (error);
+      } 
+    );
   }
   
 

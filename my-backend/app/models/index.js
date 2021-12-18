@@ -23,6 +23,8 @@ db.users = require("./user.model.js")(sequelize, Sequelize);
 db.products = require("./product.model.js")(sequelize, Sequelize);
 db.carts = require("./cart.model.js")(sequelize, Sequelize);
 db.delivery = require("./delivery.model")(sequelize, Sequelize);
+db.order = require("./order.model")(sequelize, Sequelize);
+db.productOrder = require("./productOrder.model")(sequelize, Sequelize);
 
 
 module.exports = db;

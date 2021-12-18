@@ -19,6 +19,8 @@ import { ClothesFilterPipe } from './pipes/clothes-filter.pipe';
 import { NgxStripeModule } from 'ngx-stripe';
 import { PaymentComponent } from './components/payment/payment.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { OrderComponent } from './components/order/order.component';
+import { OrderFilterPipe } from './pipes/order-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import { FooterComponent } from './components/footer/footer.component';
     CartFilterPipe,
     ClothesFilterPipe,
     PaymentComponent,
-    FooterComponent
+    FooterComponent,
+    OrderComponent,
+    OrderFilterPipe
   ],
   imports: [
     BrowserModule,

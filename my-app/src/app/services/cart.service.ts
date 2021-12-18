@@ -29,8 +29,8 @@ export class CartService {
     return this.http.post(URL, cartObj, {'headers' : header , responseType : 'text'}) ; 
   }
   
-  deleteRecord(id : any) : Observable<any> {
-    let URL = this.baseURL + "/deleteCartItem/"+id; 
+  deleteRecord(cartid : any) : Observable<any> {
+    let URL = this.baseURL + "/deleteCartItem/"+cartid; 
     console.log ("URL : "+URL); 
     return this.http.delete(URL, {responseType : 'text'}); 
   }
@@ -40,6 +40,11 @@ export class CartService {
     let header ={'content-type' : 'application/json'}; 
     // console.log ("Data to be inserted in the db.json : "+body) 
     return this.http.put(URL, cartObj, {'headers' : header , responseType : 'text'}); 
-  } 
+  }
+  emptyCart(userid : any) : Observable<any> {
+    let URL = this.baseURL + "/emptyCart/"+userid; 
+    console.log ("URL : "+URL); 
+    return this.http.delete(URL, {responseType : 'json'}); 
+  }
   
 }
