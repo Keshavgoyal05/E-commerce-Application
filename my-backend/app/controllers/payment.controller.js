@@ -1,4 +1,4 @@
-const stripe = require("../stripe.config").stripe;
+const stripe = require("../configs/stripe.config").stripe;
 const db = require("../models");
 const Delivery = db.delivery;
 exports.makePayment = (req, res, next) => {

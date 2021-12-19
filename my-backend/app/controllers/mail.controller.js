@@ -1,4 +1,4 @@
-const transporter = require("../mail.config");
+const transporter = require("../configs/mail.config");
 
 const NewUserMail =  (toMailId,name) => {
     let NewUserMail = {

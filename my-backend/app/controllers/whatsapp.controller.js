@@ -1,4 +1,4 @@
-const client = require("../whatsapp.config");
+const client = require("../configs/whatsapp.config");
 
 //client.client.initialize();
 
