@@ -1,3 +1,5 @@
+const { DATE } = require("sequelize/dist");
+
 module.exports = (sequelize, Sequelize) => {
     const Order = sequelize.define("order", {
         user_id: {
@@ -14,7 +16,8 @@ module.exports = (sequelize, Sequelize) => {
         },
         purchase_date: {
             allowNull: false,
-            type: Sequelize.DATE
+            type: Sequelize.DATE,
+            default: Date.now()
         },
         delivery_address: {
             type : Sequelize.STRING,

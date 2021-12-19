@@ -3,11 +3,13 @@ const sendmail = require("./mail.controller");
 const whatsapp = require("./whatsapp.controller");
 const User = db.users;
 const Op = db.Sequelize.Op;
-//const jwt = require('jsonwebtoken');
 
+const bcrypt = require ('bcryptjs'); 
+const uuid = require ('uuid');
+const jwt = require('jsonwebtoken');
 
 //Register User
-exports.register = (req, res) => {
+exports.register1 = (req, res) => {
   const user = req.body;
   User.create(user)
   .then(data => {
@@ -33,7 +35,7 @@ exports.register = (req, res) => {
 };
 
 //login user
-exports.login = (req, res) => {
+exports.login1 = (req, res) => {
     User.findOne({
         where: {
         email: req.body.email
@@ -138,3 +140,117 @@ exports.updatePassword = (req, res) => {
   });
 };
 
+
+
+//register using jwt
+exports.register = (req, res) => {
+  const user = req.body;
+  bcrypt.hash(user.password, 10, (err, hash) =>{ 
+    if (err) {
+      res.status (500).send ({
+        message : err
+      });
+    } 
+    else { 
+      //Insert this data in the db.
+      user.password=hash;
+      User.create(user)
+      .then ( function (data) {
+        res.status(201).send({
+          message: "User Registered Successfully."
+        });
+      }).catch(err => {
+        if(err=='SequelizeUniqueConstraintError: Validation error'){
+          return res.status(201).send({
+            message:
+              "Email already exist"
+          });
+        }
+        res.status(201).send({
+          message : "Error while registering neww user.",
+          error : err.message
+        });
+      });
+    }
+  })
+};
+
+
+//login using jwt
+exports.login = (req, res) => { 
+  var strusername = req.body.email; 
+  var strpassword = req.body.password; 
+  User.findAll({where : {email : strusername},raw : true})
+  .then ((result) => { 
+    console.log("Received data "+JSON.stringify(result)); 
+    console.log("Count of the records are : " + result.length); 
+    if (result.length < 1) { 
+      console.log ("User not found");
+      return res.status(400).send({
+        message: "user not found"
+      }); 
+    } 
+    console.log("Password in db is "+result[0].password); 
+    bcrypt.compare(strpassword, result[0].password)
+    .then ( function (bResult) { 
+      console.log("Password is right : "+bResult); 
+      if (bResult) { 
+        const token = jwt.sign(
+          {
+            username : result[0].username, 
+            id : result[0].id
+          }, 
+          'SECRETKEY', 
+          { 
+            expiresIn : '30s' 
+          } 
+        ); 
+        res.status(200).send({
+          message: "logged in successfully",
+          token : token,
+          username: result[0].firstName,
+          userid: result[0].user_id,
+          login : true
+        }); 
+      } 
+      else 
+      { 
+        res.status(400).send({
+          message: "wrong password"
+        }); 
+      } 
+    })
+    .catch (err => { 
+      console.log("The error is "+err);
+      res.status(400).send({
+        message: "unable to create token"
+      }); 
+    }) 
+  })
+  .catch ( (err) => { 
+    console.error(err);
+    res.status(500).send({
+      message: "some error while logging in : "+err
+    }); 
+  })
+};
+
+
+const authenticateJWT = (req, res, next)=> { 
+  const authHeader = req.headers. authorization; 
+  console.log("req data"+ req); console.log("AuthHeader "+authHeader); 
+  //Header, payload, signature 
+  if (authHeader) { const token = authHeader.split (' ')[1]; 
+    console.log("Given token is : "+token); 
+    jwt.verify(token, 'SECRETKEY', (err, user) => { 
+      if (err) {
+        return res.status (403).send("Invalid token, can not access data..."); 
+      }
+      req.user = user; 
+      console.log("Given data from jwt verify is "+JSON.stringify(user)); 
+      next(); 
+    }) 
+  } 
+  else 
+    res.sendStatus (401); 
+}

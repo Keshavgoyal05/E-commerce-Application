@@ -90,6 +90,7 @@ export class UserComponent implements OnInit {
         {
           //data = JSON.parse(data);
           alert(data.message);
+          console.log("token : "+data.token)
           if(data.login==true){
             console.log("login : success");
             localStorage.setItem (this.user.varIsLoggedIn, 'true') ;
