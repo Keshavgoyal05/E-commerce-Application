@@ -28,7 +28,7 @@ export class ClothesComponent implements OnInit {
   radioSelected:any = "";
 
   getAllProducts() { 
-    this.clothes.getData().subscribe
+    this.clothes.getClothesData().subscribe
     ( 
       (data) => 
       { 

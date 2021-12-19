@@ -21,6 +21,7 @@ import { PaymentComponent } from './components/payment/payment.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { OrderComponent } from './components/order/order.component';
 import { OrderFilterPipe } from './pipes/order-filter.pipe';
+import { MockdataComponent } from './components/mockdata/mockdata.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { OrderFilterPipe } from './pipes/order-filter.pipe';
     PaymentComponent,
     FooterComponent,
     OrderComponent,
-    OrderFilterPipe
+    OrderFilterPipe,
+    MockdataComponent
   ],
   imports: [
     BrowserModule,

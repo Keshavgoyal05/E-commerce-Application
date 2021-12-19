@@ -4,9 +4,9 @@
     width: 410px;
     margin-top: 10%;
     position: relative;
-    border: 3px solid skyblue;
+    border: 3px solid green;
     border-radius: 10px;
-    box-shadow: 5px 5px #042f80;
+    box-shadow: 5px 5px #888888;
   }
   
 .center {

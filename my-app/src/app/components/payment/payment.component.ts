@@ -289,6 +289,9 @@ export class PaymentComponent implements OnInit {
   totalCartItem:any;
   readCartData() 
   { 
+    // this.cartService.getCart(this.userid);
+    // this.cartService.data$.subscribe((res) => this.arrCart = res)
+    
     this.cartService.getCart(this.userid).subscribe
     ( 
       (data) => 

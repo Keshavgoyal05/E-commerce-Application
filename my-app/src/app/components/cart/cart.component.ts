@@ -32,6 +32,9 @@ export class CartComponent implements OnInit {
   delivery : number = 40;
   readCartData() 
   { 
+    // this.cartService.getCart(this.userid);
+    // this.cartService.data$.subscribe((res) => this.arrCart = res)
+    
     this.cartService.getCart(this.userid).subscribe
     ( 
       (data) => 
@@ -39,7 +42,8 @@ export class CartComponent implements OnInit {
         this.arrCart = data;
         this.totalCartItem=this.arrCart.length;
         localStorage.setItem("totalCartItem",String(this.totalCartItem));
-        this.totalPrice = this.cartFilter.transform(this.arrCart)+this.delivery; 
+        this.totalPrice = this.cartFilter.transform(this.arrCart)+this.delivery;
+         
       }, 
       (error) => console.log (error)
     );
@@ -50,7 +54,8 @@ export class CartComponent implements OnInit {
     this.cartService.deleteRecord(cart_id).subscribe 
     ( 
       (data) => 
-      { 
+      {
+        alert("product removed"); 
         this.readCartData(); 
       }, 
       (error) => console.log ("Unabled to delete record because " + error.getMessage) 

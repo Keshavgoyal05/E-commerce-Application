@@ -6,6 +6,7 @@ import { CartComponent } from './components/cart/cart.component';
 import { ClothesComponent } from './components/clothes/clothes.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { HomeComponent } from './components/home/home.component';
+import { MockdataComponent } from './components/mockdata/mockdata.component';
 import { OrderComponent } from './components/order/order.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { PaymentComponent } from './components/payment/payment.component';
@@ -16,6 +17,7 @@ const routes : Routes = [
   {path : '', redirectTo : "/home", pathMatch : 'full'}, 
   {path : 'home', component : HomeComponent}, 
   {path : 'admin', component : AdminComponent},
+  {path : 'mockdata', component : MockdataComponent},
   {path : 'cart', component : CartComponent,canActivate:[AuthguardService]},
   {path : 'about', component : AboutComponent,canActivate:[AuthguardService]}, 
   {path : 'contact', component : ContactComponent,canActivate:[AuthguardService]},

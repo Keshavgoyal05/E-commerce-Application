@@ -44,7 +44,7 @@
                 <div class="card-body">
                   <h5 class="card-title">{{item.name}}</h5>
                   <p class="title">{{item.subcategory}}</p>
-                  <p class="card-text">You won't like until you try it</p>
+                  <p class="card-text">{{item.description}}</p>
                   <p class="card-text"><small>{{item.price | currency : 'INR'}}&nbsp;<del>{{item.discount | currency : 'INR'}}</del></small></p>
                   <div>
                     <a  class="btn btn-primary cartclick" (click)="addItemToCart(item)">Add To Cart</a>

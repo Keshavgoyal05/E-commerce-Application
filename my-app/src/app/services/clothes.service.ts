@@ -11,9 +11,9 @@ export class ClothesService {
 
   baseURL = "http://localhost:8000/clothes";
 
-  getData() : Observable<any> { 
+  getClothesData() : Observable<any> { 
     var URL = this.baseURL + "/getAllClothes"; 
     return this.http.get(URL); 
-  } 
+  }
   
 }

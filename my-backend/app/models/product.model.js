@@ -7,15 +7,15 @@ module.exports = (sequelize, Sequelize) => {
         },
         category: {
             type : Sequelize.STRING,
-            allowNull: true
+            allowNull: false
         },
         subcategory: {
             type : Sequelize.STRING,
-            allowNull: true
+            allowNull: false
         },
         name: {
             type : Sequelize.STRING,
-            allowNull: true
+            allowNull: false
         },
         rating: {
             type : Sequelize.DECIMAL(10,2),
@@ -23,7 +23,7 @@ module.exports = (sequelize, Sequelize) => {
         },
         image: {
             type : Sequelize.STRING,
-            allowNull: true
+            allowNull: false
         },
         description: {
             type : Sequelize.STRING,
@@ -32,7 +32,7 @@ module.exports = (sequelize, Sequelize) => {
         available: {
             type : Sequelize.STRING,
             allowNull: true,
-            default : "true"
+            default : "yes"
         },
         condition: {
             type : Sequelize.STRING,

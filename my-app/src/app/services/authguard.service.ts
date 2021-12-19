@@ -14,7 +14,7 @@ export class AuthguardService {
     if (localStorage.getItem('isLoggedIn') != 'true') 
     { 
       alert ("Sorry, you are not allowed to view this page.."); 
-      this.router.navigate (['/home']); 
+      this.router.navigate (['/login']); 
       bReturn = false; 
     } 
     return bReturn;

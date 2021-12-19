@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CartService } from 'src/app/services/cart.service';
 import { UserService } from 'src/app/services/user.service';
 import Validation from 'src/app/Validations/validation';
 
@@ -11,7 +12,7 @@ import Validation from 'src/app/Validations/validation';
 })
 export class UserComponent implements OnInit {
 
-  constructor(private formbuilber : FormBuilder, private user : UserService, private router : Router) { }
+  constructor(private formbuilber : FormBuilder, private user : UserService, private router : Router, private cartService : CartService) { }
 
   
   form : FormGroup = new FormGroup({
@@ -94,6 +95,14 @@ export class UserComponent implements OnInit {
             localStorage.setItem (this.user.varIsLoggedIn, 'true') ;
             localStorage.setItem("username",data.username);
             localStorage.setItem("userid",data.userid);
+            this.cartService.getCart(data.userid).subscribe
+            ( 
+              (data) => 
+              { 
+                console.log("data received");
+              }, 
+              (error) => console.log (error)
+            );
             this.close();
             this.router.navigate(['/home']);
           }
