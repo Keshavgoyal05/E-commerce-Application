@@ -60,18 +60,18 @@ export class CartService {
     this.data.next([...this.data.getValue(),new_cart_obj]);
   }
 
-  update_Cart(cartObj: any){
-    for (let i =0 ; i<this.data.getValue().length;i++){
-      if(cartObj.cart_id==this.data.getValue()[i].cart_id && cartObj.user_id==this.data.getValue()[i].user_id){
-        var temp_data = this.data.getValue()[i];
-        temp_data.quantity=cartObj.quantity;
-        this.cart[i]=temp_data;
-        this.data.next([...this.cart])
-        console.log(this.data)
-        break;
-      }
-    }
-  }
+  // update_Cart(cartObj: any){
+  //   for (let i =0 ; i<this.data.getValue().length;i++){
+  //     if(cartObj.cart_id==this.data.getValue()[i].cart_id && cartObj.user_id==this.data.getValue()[i].user_id){
+  //       var temp_data = this.data.getValue()[i];
+  //       temp_data.quantity=cartObj.quantity;
+  //       this.cart[i]=temp_data;
+  //       this.data.next([...this.cart])
+  //       console.log(this.data)
+  //       break;
+  //     }
+  //   }
+  // }
 
   Delete(id:number){
     let arr = this.data.getValue()
@@ -119,7 +119,7 @@ export class CartService {
   }
 
   editData (cartObj : any,auth_token : any) : Observable<any> { 
-    this.update_Cart(cartObj);
+    //this.update_Cart(cartObj);
     var URL = this.baseURL + "/updateCartItem"; 
     let header ={'content-type' : 'application/json', 'Authorization' : `Bearer ${auth_token}`}; 
     return this.http.put(URL, cartObj, {'headers' : header , responseType : 'text'}); 
