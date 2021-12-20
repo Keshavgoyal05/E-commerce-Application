@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { CartService } from 'src/app/services/cart.service';
 import { UserService } from 'src/app/services/user.service';
 import Validation from 'src/app/Validations/validation';
-
+import jwt_decode from "jwt-decode";
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -45,7 +45,7 @@ export class UserComponent implements OnInit {
       email : ['', [Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]], 
       phone : ['',[Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
       whatsappNo : ['',Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")],
-      password : ['', [Validators.required,Validators.maxLength(20)]],
+      password : ['', [Validators.required]],
       confirmPassword : ['',Validators.required]
     },
     {
@@ -91,12 +91,16 @@ export class UserComponent implements OnInit {
           //data = JSON.parse(data);
           alert(data.message);
           console.log("token : "+data.token)
-          if(data.login==true){
-            console.log("login : success");
+          let decoded_token :any = jwt_decode(data.token);
+          if(decoded_token.login==true){
+            
             localStorage.setItem (this.user.varIsLoggedIn, 'true') ;
-            localStorage.setItem("username",data.username);
-            localStorage.setItem("userid",data.userid);
-            this.cartService.getCart(data.userid).subscribe
+            localStorage.setItem("username",decoded_token.username);
+            localStorage.setItem("userid",decoded_token.userid);
+            localStorage.setItem("auth_token",data.token);
+            console.log("username : "+decoded_token.username);
+
+            this.cartService.getCart(localStorage.getItem("userid"),data.token).subscribe
             ( 
               (data) => 
               { 
@@ -104,10 +108,11 @@ export class UserComponent implements OnInit {
               }, 
               (error) => console.log (error)
             );
-            this.close();
-            this.router.navigate(['/home']);
           }
           this.close();
+          this.router.navigate(['/home']);
+          
+          
         }, 
         (error) => 
         {
@@ -138,7 +143,7 @@ export class UserComponent implements OnInit {
       ( 
         (data) => 
         { 
-          alert(JSON.parse(data).message);
+          alert(data.message);
           this.close(); 
           this.router.navigate(['/login']);   
         }, 

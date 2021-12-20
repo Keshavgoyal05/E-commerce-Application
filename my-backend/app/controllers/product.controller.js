@@ -75,6 +75,6 @@ exports.deleteProducts = (req, res) => {
         res.status (200). send (strmsg); 
     }).catch ( err => { 
         console.error("There is an error deleting product : "+err); 
-        res.status (400).send (err); 
+        res.status (400).send (err.name); 
     })  
 };

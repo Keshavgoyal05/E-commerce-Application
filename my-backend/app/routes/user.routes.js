@@ -10,6 +10,12 @@ module.exports = app => {
     router.post("/sendOtp", users.sendOtp);
 
     router.put("/updatePassword", users.updatePassword);
+
+    router.get("/getAllUsers", users.getAllUsers);
+
+    router.put("/updateUser", users.updateUser);
+
+    router.delete("/deleteUser/:id", users.deleteUser);
   
     app.use("/users", router);
   };

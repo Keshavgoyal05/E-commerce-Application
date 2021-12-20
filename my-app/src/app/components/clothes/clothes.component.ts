@@ -94,7 +94,7 @@ export class ClothesComponent implements OnInit {
   }
 
   insertDataToCart(cart :any){
-    this.cartService.insertData(cart).subscribe 
+    this.cartService.insertData(cart,String(localStorage.getItem("auth_token"))).subscribe 
     ( 
       (data) => 
       { 
@@ -106,7 +106,7 @@ export class ClothesComponent implements OnInit {
   }
 
   editCartRecord(cart :any){
-    this.cartService.editData(cart).subscribe 
+    this.cartService.editData(cart,String(localStorage.getItem("auth_token"))).subscribe 
     ( 
       (data) => 
       { 

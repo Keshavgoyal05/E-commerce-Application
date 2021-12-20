@@ -14,9 +14,10 @@ export class CartService {
   
   baseURL = "http://localhost:8000/cart";
 
-  getCart(userid :number){
+  getCart(userid :any,auth_token : any){
     console.log(this.cart)
-    this.http.get<any[]>(this.baseURL+ "/getCarts/"+userid)
+    let header = { 'Content-Type' : 'application/json', 'Authorization' : `Bearer ${auth_token}` };
+    this.http.get<any[]>(this.baseURL+ "/getCarts/"+userid,{ 'headers' : header})
     .subscribe(data=>{
       var data1=[]
       console.log(data)
@@ -39,7 +40,7 @@ export class CartService {
       console.log(this.data$);
       this.data.next([...data1])
     })
-     return this.http.get<any[]>(this.baseURL+ "/getCarts/"+userid);
+     return this.http.get<any[]>(this.baseURL+ "/getCarts/"+userid,{ 'headers' : header});
   }
 
   Add_Cart(cartObj : any){
@@ -102,33 +103,32 @@ export class CartService {
     let header ={'content-type' : 'application/json'}; 
     return this.http.post(URL,obj,{'headers' : header , responseType : 'text'});
   }
-  insertData (cartObj : any) : Observable<any> {
+  insertData (cartObj : any,auth_token : String) : Observable<any> {
     this.Add_Cart(cartObj)
     var URL = this.baseURL + "/insertCartItem"; 
-    let header ={'content-type' : 'application/json'};  
+    let header ={'content-type' : 'application/json', 'Authorization' : `Bearer ${auth_token}`};  
     return this.http.post(URL, cartObj, {'headers' : header , responseType : 'text'}) ; 
   }
   
-  deleteRecord(cartid : any) : Observable<any> {
+  deleteRecord(cartid : any,auth_token : any) : Observable<any> {
     this.Delete(cartid);
     let URL = this.baseURL + "/deleteCartItem/"+cartid; 
     console.log ("URL : "+URL); 
-    return this.http.delete(URL, {responseType : 'text'}); 
+    let header ={'content-type' : 'application/json', 'Authorization' : `Bearer ${auth_token}`};
+    return this.http.delete(URL, {'headers' : header ,responseType : 'text'}); 
   }
 
-  editData (cartObj : any) : Observable<any> { 
+  editData (cartObj : any,auth_token : any) : Observable<any> { 
     this.update_Cart(cartObj);
     var URL = this.baseURL + "/updateCartItem"; 
-    let header ={'content-type' : 'application/json'}; 
-    // console.log ("Data to be inserted in the db.json : "+body) 
+    let header ={'content-type' : 'application/json', 'Authorization' : `Bearer ${auth_token}`}; 
     return this.http.put(URL, cartObj, {'headers' : header , responseType : 'text'}); 
   }
-  emptyCart(userid : any) : Observable<any> {
+  emptyCart(userid : any,auth_token : any) : Observable<any> {
     this.emptyCart1();
     let URL = this.baseURL + "/emptyCart/"+userid; 
-    console.log ("URL : "+URL); 
-    return this.http.delete(URL, {responseType : 'json'});
-
+    console.log ("URL : "+URL); let header ={'content-type' : 'application/json', 'Authorization' : `Bearer ${auth_token}`};
+    return this.http.delete(URL, {'headers' : header ,responseType : 'json'});
   }
   
 }

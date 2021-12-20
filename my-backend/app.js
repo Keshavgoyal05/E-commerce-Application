@@ -14,7 +14,6 @@ const db = require("./app/models");
 
 
 require("./app/routes/user.routes")(app);
-require("./app/routes/admin.routes")(app);
 require("./app/routes/clothes.routes")(app);
 require("./app/routes/cart.routes")(app);
 require("./app/routes/payment.routes")(app);

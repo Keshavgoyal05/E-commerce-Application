@@ -22,7 +22,7 @@ export class UserService {
     var URL = this.baseURL + "/register"; 
     let header ={'content-type' : 'application/json'}; 
     console.log ("Data to be inserted in the db.json : "+registerObj + JSON.stringify(registerObj)); 
-    return this.http.post(URL, registerObj, {'headers' : header , responseType : 'text'}); 
+    return this.http.post(URL, registerObj, {'headers' : header , responseType : 'json'}); 
   }
   SendOTP (email : any) : Observable<any> { 
     var URL = this.baseURL + "/sendOtp"; 
@@ -35,6 +35,24 @@ export class UserService {
     let header ={'content-type' : 'application/json'}; 
     console.log ("Data to be updated in the  user db : "+JSON.stringify(userObj)); 
     return this.http.put(URL, userObj, {'headers' : header , responseType : 'text'}); 
+  }
+
+  getData() : Observable<any> { 
+    var URL = this.baseURL + "/getAllUsers"; 
+    return this.http.get(URL); 
+  } 
+  
+  
+  editData (userObj : any) : Observable<any> { 
+    var URL = this.baseURL + "/updateUser"; 
+    let header ={'content-type' : 'application/json'}; 
+    // console.log ("Data to be inserted in the db.json : "+body) 
+    return this.http.put(URL, userObj, {'headers' : header , responseType : 'text'}); 
+  } 
+  deleteRecord(id : number) : Observable<any> {
+    let URL = this.baseURL + "/deleteUser/"+id; 
+    console.log ("URL : "+URL); 
+    return this.http.delete(URL, {responseType : 'text'}); 
   }
   
 }

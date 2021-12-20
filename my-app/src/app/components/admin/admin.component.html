@@ -151,9 +151,6 @@
                 <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
                   <div *ngIf="f['password'].errors['required']">Password is required</div>
                   
-                  <div *ngIf="f['password'].errors['maxlength']">
-                    Password must not exceed 20 characters
-                  </div>
                   <div *ngIf="f['password'].errors['check']">
                     Minimum 8 characters, at least one uppercase letter, 
                     one lowercase letter and one number

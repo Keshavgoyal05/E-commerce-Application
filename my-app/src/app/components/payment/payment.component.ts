@@ -125,7 +125,7 @@ export class PaymentComponent implements OnInit {
               this. loading = false; 
               this. submitted = false; 
               this.paymentStatus = true;
-              alert(this.paymentStatus+res['msg']);
+              alert(res['msg']);
               this.addOrder();
             } 
             else{ 
@@ -292,7 +292,7 @@ export class PaymentComponent implements OnInit {
     // this.cartService.getCart(this.userid);
     // this.cartService.data$.subscribe((res) => this.arrCart = res)
     
-    this.cartService.getCart(this.userid).subscribe
+    this.cartService.getCart(this.userid,String(localStorage.getItem("auth_token"))).subscribe
     ( 
       (data) => 
       { 
@@ -342,7 +342,7 @@ export class PaymentComponent implements OnInit {
               { 
                 console.log("all cart products added to productOrder Table successfully");
                 alert(data.message);
-                this.cartService.emptyCart(this.userid).subscribe 
+                this.cartService.emptyCart(this.userid,String(localStorage.getItem("auth_token"))).subscribe 
                 ( 
                   (data) => 
                   { 

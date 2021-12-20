@@ -13,10 +13,12 @@ export class AppComponent {
   totalCartItem : any ;
   userid: any;
   username1 :any;
+  auth_token : any;
 
   constructor(private userService : UserService, private cartService : CartService){
     this.userid =localStorage.getItem('userid');
     this.username1 =localStorage.getItem('username');
+    this.auth_token = localStorage.getItem("auth_token");
     this.cartService.data$.subscribe((res)=>{this.totalCartItem=res.length});
   }
   
@@ -29,7 +31,7 @@ export class AppComponent {
 
   readCartData() 
   { 
-    this.cartService.getCart(this.userid).subscribe
+    this.cartService.getCart(this.userid,this.auth_token).subscribe
     ( 
       (data) => 
       { 
@@ -44,6 +46,8 @@ export class AppComponent {
       this.login=false;
       localStorage.removeItem('username');
       localStorage.removeItem('totalCartItem');
+      localStorage.removeItem("auth_token");
+      localStorage.removeItem("userid");
     }
 
   }

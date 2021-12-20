@@ -16,5 +16,3 @@ module.exports = app => {
     
     app.use("/products", router);
 };
-
-// Link to add all products to product DB : http://localhost:8000/products/addMockProducts

@@ -10,10 +10,8 @@ import { CartService } from 'src/app/services/cart.service';
 export class CartComponent implements OnInit {
 
   userid :any;
-  username: string | null;
   constructor(private cartService : CartService, private cartFilter : CartFilterPipe) {
     this.userid =localStorage.getItem('userid');
-    this.username = localStorage.getItem('username');
   }
 
   ngOnInit(): void {
@@ -35,7 +33,7 @@ export class CartComponent implements OnInit {
     // this.cartService.getCart(this.userid);
     // this.cartService.data$.subscribe((res) => this.arrCart = res)
     
-    this.cartService.getCart(this.userid).subscribe
+    this.cartService.getCart(this.userid,localStorage.getItem("auth_token")).subscribe
     ( 
       (data) => 
       { 
@@ -45,20 +43,26 @@ export class CartComponent implements OnInit {
         this.totalPrice = this.cartFilter.transform(this.arrCart)+this.delivery;
          
       }, 
-      (error) => console.log (error)
+      (error) => {
+        alert(error.error);
+        console.log (""+error);
+      }
     );
   }
   deleteCartRecord(cart_id:any) 
   { 
-    
-    this.cartService.deleteRecord(cart_id).subscribe 
+    this.cartService.deleteRecord(cart_id,localStorage.getItem("auth_token")).subscribe 
     ( 
       (data) => 
       {
         alert("product removed"); 
         this.readCartData(); 
       }, 
-      (error) => console.log ("Unabled to delete record because " + error.getMessage) 
+      (error) => {
+        alert(error.error);
+        console.log ("Unabled to delete record because " + error) ;
+      }
+      
     );
   }
   

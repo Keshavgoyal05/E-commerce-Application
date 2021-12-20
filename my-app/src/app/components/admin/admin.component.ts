@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AdminService } from 'src/app/services/admin.service';
-import { ClothesService } from 'src/app/services/clothes.service';
 import { ProductService } from 'src/app/services/product.service';
 import { UserService } from 'src/app/services/user.service';
 import Validation from 'src/app/Validations/validation';
@@ -13,7 +11,7 @@ import Validation from 'src/app/Validations/validation';
 })
 export class AdminComponent implements OnInit {
 
-  constructor(private user : AdminService,private formbuilber : FormBuilder, private productService : ProductService, private userService : UserService) { }
+  constructor(private userService : UserService,private formbuilber : FormBuilder, private productService : ProductService) { }
 
   form ! : FormGroup;
   productForm ! : FormGroup;
@@ -27,7 +25,7 @@ export class AdminComponent implements OnInit {
       email : ['', [Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]], 
       phone : ['',[Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
       whatsappNo : ['',Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")],
-      password : ['', [Validators.required,Validators.maxLength(20)]],
+      password : ['', [Validators.required]],
       confirmPassword : ['',Validators.required]
     },
     {
@@ -48,6 +46,7 @@ export class AdminComponent implements OnInit {
       price : ['',Validators.required],
       discount : ['',]
     });
+    localStorage.setItem (this.userService.varIsLoggedIn, 'false') ;
     this.readUserData();
     this.readProductData();
   }
@@ -78,7 +77,7 @@ export class AdminComponent implements OnInit {
   arrUser : any[]=[]; 
   readUserData() 
   { 
-    this.user.getData().subscribe
+    this.userService.getData().subscribe
     ( 
       (data) => 
       { 
@@ -126,12 +125,12 @@ export class AdminComponent implements OnInit {
         "whatsappNo" : this.form.value.whatsappNo,
         "password" : this.form.value.password
       }
-      this.user.insertData(userObj).subscribe 
+      this.userService.RegisterUser(userObj).subscribe 
       ( 
         (data) => 
         { 
           console.log("Inserted data is "+data);
-          alert(data); 
+          alert(data.message); 
           this.readUserData(); 
           this.close();
         }, 
@@ -144,14 +143,18 @@ export class AdminComponent implements OnInit {
   } 
   deleteUserRecord(id:number) 
   { 
-    this.user.deleteRecord(id).subscribe 
+    this.userService.deleteRecord(id).subscribe 
     ( 
       (data) => 
       { 
         alert(data); 
         this.readUserData(); 
       }, 
-      (error) => console.log ("Unabled to delete record because " + error.getMessage) 
+      (error) => 
+      {
+        alert(error.error);
+        console.log ("Unabled to delete record because " + error.getMessage);
+      } 
     );
   }
   onEditUserRecord(row:any){
@@ -183,7 +186,7 @@ export class AdminComponent implements OnInit {
         "whatsappNo" : this.form.value.whatsappNo,
         "password" : this.form.value.password
       }
-      this.user.editData(studentobj).subscribe 
+      this.userService.editData(studentobj).subscribe 
       ( 
         (data) => 
         { 
@@ -262,7 +265,7 @@ export class AdminComponent implements OnInit {
       }, 
       (error) => 
       {
-        alert("issue in deleting product");
+        alert(error.error);
         console.log ("Unabled to delete product because " + error.getMessage) ;
       }
     );
