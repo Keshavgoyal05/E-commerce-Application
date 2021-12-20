@@ -9,7 +9,7 @@ Here we are using Angular for front-end and node for back-end and postgres as Da
 
 ***********************************************************************************************************************************************************
 
-To run this application on your localhost, follow the following steps - 
+To run this application on your localhost as a user , follow the following steps - 
 
 1) clone this git repo on your local disk
 
@@ -17,7 +17,7 @@ To run this application on your localhost, follow the following steps -
 with this it will run on some localhost, e.g. http://localhost:4200/home
 
 3) open backend with terminal and type   "npm install" and after that type  "npm start" ,
-with this it will run on localhost, e.g. http://localhost:8000.
+with this it will run on localhost http://localhost:8000
 Note - Make sure your localhost with 8000 port is available.
 
 NOTE - once it is then you will see a file named as "db.config.js" at location "/E-Commerce/my-backend/app/configs/db.config.js".
@@ -32,4 +32,14 @@ Note - perform this step only one time.
 
 6) Wollaa, once this is done then again go to "http://localhost:4200/home" url and from here you can  use it in same way as a regular 
 real time e-commerce website. Now, you can register, login, visit different sections , add item to cart, place orders, make payments, etc.
+
+***********************************************************************************************************************************************************
+
+To run the admin part of this application -  
+
+1) go to "http://localhost:4200/admin"
+2) enter username as "admin" and password as "imadmin".
+3) now you can view admin controls, For now you can manage all users and products here only.
+
+
 
