@@ -73,7 +73,7 @@ export class AdminComponent implements OnInit {
   }
   
 
-  user_column=["StudentID", "First Name", "Last Name", "Email", "Phone No.",'Whatsapp No.','Password','Action'];
+  user_column=["StudentID", "First Name", "Last Name", "Email", "Phone No.",'Whatsapp No.','Action'];
   arrUser : any[]=[]; 
   readUserData() 
   { 
@@ -167,12 +167,15 @@ export class AdminComponent implements OnInit {
     this.form.controls['email'].setValue(row.email);
     this.form.controls['phone'].setValue(row.phone); 
     this.form.controls['whatsappNo'].setValue(row.whatsappNo);
-    this.form.controls['password'].setValue(row.password);
+    //this.form.controls['password'].setValue(row.password);
   }
   editUserRecord()
   {
     this.submitted = true;
-    if(this.form.invalid){
+    if(this.form.controls['user_id'].invalid || this.form.controls['firstName'].invalid || 
+      this.form.controls['lastName'].invalid || this.form.controls['email'].invalid || 
+      this.form.controls['phone'].invalid || this.form.controls['whatsappNo'].invalid )
+    {
       alert("fill all details pls");
       return;
     }
@@ -184,7 +187,7 @@ export class AdminComponent implements OnInit {
         "email" : this.form.value.email,
         "phone" : this.form.value.phone,
         "whatsappNo" : this.form.value.whatsappNo,
-        "password" : this.form.value.password
+        "password" : null
       }
       this.userService.editData(studentobj).subscribe 
       ( 

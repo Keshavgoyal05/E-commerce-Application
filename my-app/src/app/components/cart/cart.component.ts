@@ -39,7 +39,6 @@ export class CartComponent implements OnInit {
       { 
         this.arrCart = data;
         this.totalCartItem=this.arrCart.length;
-        localStorage.setItem("totalCartItem",String(this.totalCartItem));
         this.totalPrice = this.cartFilter.transform(this.arrCart)+this.delivery;
          
       }, 

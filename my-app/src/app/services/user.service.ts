@@ -24,6 +24,7 @@ export class UserService {
     console.log ("Data to be inserted in the db.json : "+registerObj + JSON.stringify(registerObj)); 
     return this.http.post(URL, registerObj, {'headers' : header , responseType : 'json'}); 
   }
+  
   SendOTP (email : any) : Observable<any> { 
     var URL = this.baseURL + "/sendOtp"; 
     let header ={'content-type' : 'application/json'}; 
@@ -37,6 +38,7 @@ export class UserService {
     return this.http.put(URL, userObj, {'headers' : header , responseType : 'text'}); 
   }
 
+
   getData() : Observable<any> { 
     var URL = this.baseURL + "/getAllUsers"; 
     return this.http.get(URL); 
@@ -48,7 +50,8 @@ export class UserService {
     let header ={'content-type' : 'application/json'}; 
     // console.log ("Data to be inserted in the db.json : "+body) 
     return this.http.put(URL, userObj, {'headers' : header , responseType : 'text'}); 
-  } 
+  }
+
   deleteRecord(id : number) : Observable<any> {
     let URL = this.baseURL + "/deleteUser/"+id; 
     console.log ("URL : "+URL); 

@@ -178,7 +178,10 @@ exports.updatePassword = (req, res) => {
 };
 
 exports.getAllUsers = (req, res) => { 
-  User.findAll({raw : true}).then ( data => { 
+  console.log("in get all users");
+  User.findAll({raw : true}).then ( data => {
+      console.log("passsword : "+data.password);
+      delete data.password; 
       console.log(data); 
       res.status (200).send(data) 
   }).catch ( err => { 
@@ -188,7 +191,16 @@ exports.getAllUsers = (req, res) => {
 };
 
 exports.updateUser = (req, res) => {
-  User.update( req.body ,
+  User.update( 
+    {
+      user_id : req.body.user_id,
+      firstName : req.body.firstName,
+      lastName : req.body.lastName,
+      email : req.body.email,
+      phone : req.body.phone,
+      whatsappNo : req.body.whatsappNo,
+    }, 
+    
       {
           where : {
               user_id : req.body.user_id
@@ -226,6 +238,8 @@ exports.deleteUser = (req, res) => {
 //Register User without using jwt
 exports.register1 = (req, res) => {
   const user = req.body;
+  console.log("in register1");
+  console.log(user);
   User.create(user)
   .then(data => {
     whatsapp.sendMsg(user.whatsappNo,"Hi "+user.firstName+"\n Welcome to ShopQuick.");
@@ -248,6 +262,8 @@ exports.register1 = (req, res) => {
     });
   });
 };
+
+
 
 //login user without using jwt
 exports.login1 = (req, res) => {
@@ -292,3 +308,5 @@ exports.login1 = (req, res) => {
     });
 };
 */
+
+
